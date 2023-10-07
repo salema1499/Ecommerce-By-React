@@ -1,0 +1,23 @@
+.product .btn{
+    opacity: 0;
+    transform:translateY(100%);
+    transition: transform 0.5s ,opacity 0.5s;
+
+}
+.product{
+    transition: border 0.2s;
+}
+.product:hover .btn{
+       opacity: 1;
+       transform:translateY(0%);
+ 
+}
+.product:hover {
+    border: 1px solid green;
+    border-radius: 5px;
+}
+
+.hello{
+   display: none !important;
+    
+}
