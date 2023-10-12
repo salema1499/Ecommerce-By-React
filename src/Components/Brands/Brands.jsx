@@ -9,7 +9,7 @@ export default function Brands() {
   const [brands, setBrands] = useState([])
   async function getAllBrands(){
     let {data}=await axios.get(`https://ecommerce.routemisr.com/api/v1/brands`)
-     console.log(data?.data)
+   //  console.log(data?.data)
      setBrands(data?.data)
   }
 

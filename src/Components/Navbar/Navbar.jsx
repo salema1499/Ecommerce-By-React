@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import logo from "./../../Assets/Imgs/freshcart-logo.svg";
-import Brands from './../Brands/Brands';
 import { authContext } from "../Context/authContext";
 
 import style from './Navbar.module.css'
@@ -17,7 +16,7 @@ export default function Navbar() {
   }
   return (
     <>
-      <nav className={`${style.navbarbg} navbar  navbar-expand-lg  position-fixed top-0 start-0 end-0 z-2`}>
+      <nav className={`${style.navbarbg} navbar  navbar-expand-lg   z-2`}>
         <div className="container-fluid ">
           <Link className="navbar-brand" to="/">
             <img src={logo} alt="logo" />
@@ -62,6 +61,16 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link className="nav-link text-success fw-bold " to="/cart">
                   Cart
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link text-success fw-bold " to="/allorders">
+                  All Orders
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link text-success fw-bold " to="/profile">
+                  Profile
                 </Link>
               </li></>:""}
           

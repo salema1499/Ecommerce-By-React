@@ -16,53 +16,60 @@ export default function FeatureProducts() {
     ///enabled: false,
   });
   console.log(isLoading);
-const [loading, setLoading] = useState(false)
-const [loadingblock, setLoadingblock] = useState(false)
-const [loadingnone, setLoadingnone] = useState('d-none');
-  let Women = data?.data.data.filter(function (el) {
-    return el?.category.name === "Women's Fashion";
-  });
-  localStorage.setItem("woman", JSON.stringify(Women));
-  //Women?.map((one) => console.log(one));
+  //const [number, setnumber] = useState(0)
+  const [loading, setLoading] = useState(false);
+  //const [loadingblock, setLoadingblock] = useState(false);
+ // const [loadingnone, setLoadingnone] = useState("d-none");
+  // let Women = data?.data.data.filter(function (el) {
+  //   return el?.category.name === "Women's Fashion";
+  // });
+  // localStorage.setItem("woman", JSON.stringify(Women));
+  // //Women?.map((one) => console.log(one));
 
-  let men = data?.data.data.filter(function (el) {
-    return el?.category.name === "Men's Fashion";
-  });
-  localStorage.setItem("men", JSON.stringify(men));
-  // men?.map((one) => console.log(one));
+  // let men = data?.data.data.filter(function (el) {
+  //   return el?.category.name === "Men's Fashion";
+  // });
+  // localStorage.setItem("men", JSON.stringify(men));
+  // // men?.map((one) => console.log(one));
 
-  let elec = data?.data.data.filter(function (el) {
-    return el?.category.name === "Electronics";
-  });
-  localStorage.setItem("elec", JSON.stringify(elec));
-  // elec?.map((one) => console.log(one));
+  // let elec = data?.data.data.filter(function (el) {
+  //   return el?.category.name === "Electronics";
+  // });
+  // localStorage.setItem("elec", JSON.stringify(elec));
+  // // elec?.map((one) => console.log(one));
 
   function featureProduct() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/products");
   }
 
   let { AddToCart } = useContext(cartContext);
-
+   
   async function addtocart(id) {
     let res = await AddToCart(id);
-  //   setLoading(true)
-  // setLoadingnone('d-block')
-  setLoadingblock(true)
+    setLoading(true);
+    // setLoadingnone('d-block')
+    //setLoadingblock(true);
     console.log(res);
-       
+
     if (res.data.status === "success") {
-        //  console.log("load",isLoading);
-         setLoading(false)
-        //  setLoading("d-block")
-        //  setLoadingblock("d-none")
-       
-      
+      setLoading(false);
+
       toast.success("You Added Successfully ");
     } else {
-    
       toast.error("This didn't add to your cart!!!!");
     }
   }
+
+  // function checkAdd(proId){
+    
+  //   for (let prId = 0; prId < proId; prId++) {
+  //    if(loading){
+  //      setLoading(false)
+  //    }    
+  //   }
+
+     
+  // }
 
   //console.log(data?.data.data);
   // const [isLoading, setIsLoading] = useState(false);
@@ -94,10 +101,12 @@ const [loadingnone, setLoadingnone] = useState('d-none');
           </div> */}
           <div className="row">
             {data?.data.data.map((product) => (
+             
               <div
                 className={`${style.product} col-lg-2 col-md-4 col-sm-12 overflow-hidden`}
                 key={product.id}
               >
+               
                 <div className="p-1">
                   <Link to={`/productdetalis/${product.id}`}>
                     <img
@@ -130,8 +139,9 @@ const [loadingnone, setLoadingnone] = useState('d-none');
                   <button
                     onClick={() => addtocart(product.id)}
                     className={`${style.btn} btn btn-success  text-white w-100 text-center p-1 `}
-                  > add to cart
-                   {/* {!loadingblock?"add to cart":"inCart"} */}
+                  >
+                  
+                      add to cart 
                   </button>
 
                   {/* <button
@@ -146,7 +156,6 @@ const [loadingnone, setLoadingnone] = useState('d-none');
                   >
                   in Cart
                   </button> */}
-                  
                 </div>
               </div>
             ))}

@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { authContext } from "../Context/authContext";
 
 export default function Login() {
-  let {setToken}=useContext(authContext)
+  let {setToken,setUserData}=useContext(authContext)
   let dataToken=''
   let regPassword = /^[A-Z]{1}[a-z]{5,10}$/;
   let Navigate = useNavigate();
@@ -29,10 +29,12 @@ export default function Login() {
         setisLoading(false);
         seterror(err.response.data.message);
       });
+      //console.log("res",res);
     if (res.data.message === "success") {
       dataToken=res.data.token
       localStorage.setItem('token',dataToken)
       setToken(dataToken)
+     setUserData(res?.data.user)
       setisLoading(false);
       Navigate("/");
     }

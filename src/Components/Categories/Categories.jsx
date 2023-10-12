@@ -12,13 +12,13 @@ export default function Categories() {
     let data  = await axios.get(
       "https://ecommerce.routemisr.com/api/v1/categories"
     );
-    console.log(data.data.data);
+    //console.log(data.data.data);
     
 
     setAllCate(data?.data.data);
   }
   let params=  useParams()
-console.log(params)
+//console.log(params)
 
   useEffect(() => {
     getallCategory();

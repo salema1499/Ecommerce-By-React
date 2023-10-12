@@ -3,6 +3,7 @@ import {Toaster} from "react-hot-toast";
 // import {RouterProvider }from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import Address from "./Components/Address/Address";
 import Brands from "./Components/Brands/Brands";
 import Cart from "./Components/Cart/Cart";
 import Categories from "./Components/Categories/Categories";
@@ -16,6 +17,7 @@ import Login from "./Components/Login/Login";
 import Orders from "./Components/Orders/Orders";
 import ProductDetalis from "./Components/ProductDetalis/ProductDetalis";
 import Products from "./Components/Products/Products";
+import Profile from "./Components/Profile/Profile";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import Register from "./Components/Register/Register";
 
@@ -49,7 +51,7 @@ export default function App() {
           ),
         },
         {
-          path: "order",
+          path: "allorders",
           element: (
             <ProtectedRoute>
               <Orders />
@@ -87,6 +89,20 @@ export default function App() {
           element: (
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          ),
+        },{
+          path: "profile",
+          element: (
+            <ProtectedRoute>
+              <Profile/>
+            </ProtectedRoute>
+          ),
+        },{
+          path: "address",
+          element: (
+            <ProtectedRoute>
+              <Address/>
             </ProtectedRoute>
           ),
         },

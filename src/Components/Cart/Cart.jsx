@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { Link } from 'react-router-dom';
 
+import Address from './../Address/Address';
 import emptycart from "../../Assets/Imgs/empty-cart_701961-7086.avif";
 import { cartContext } from "../Context/cartContext";
 
@@ -10,76 +12,59 @@ export default function Cart() {
   const [numitemscart, setNumitemscart] = useState(0);
   const [totalprice, setTotalprice] = useState(0);
   const [displayCartme, setDisplayCartme] = useState([]);
+
   let { displayCart, updataCountCart, removeItemCart, removeAllCart } =
     useContext(cartContext);
 
-  // const [count, setCount] = useState(0)
   async function displaymycart() {
     let data = await displayCart();
     // console.log(data);
-    console.log(data.data);
-    //  console.log("display: ",data?.data.data.products);
-    //  console.log("numitems",data?.data.numOfCartItems);
-    //  console.log("toprice",data?.data.data.totalCartPrice);
-     if(data?.data){
+    // console.log(data?.data);
+
+    if (data?.data) {
+      setDisplayCartme(data?.data.data.products);
+      setNumitemscart(data?.data.numOfCartItems);
+      setTotalprice(data?.data.data.totalCartPrice);
+    } else {
+      setDisplayCartme();
+      setNumitemscart(0);
+      setTotalprice(0);
+    }
+  }
+  useEffect(() => {
+    displaymycart();
+   // console.log(displayCartme);
+  }, []);
+
+  async function updataMyCart(id, count) {
+    let data = await updataCountCart(id, count);
+    //console.log(data?.data);
     setDisplayCartme(data?.data.data.products);
     setNumitemscart(data?.data.numOfCartItems);
     setTotalprice(data?.data.data.totalCartPrice);
-     }else{
-      setDisplayCartme(null);
-      setNumitemscart(0);
-      setTotalprice(0);
-     }
   }
-  useEffect(() => {
-  displaymycart()
-    console.log(displayCartme);
-   
-  }, []);
-  
-  // async function plusCount(id,count){
-  //   let res=await updataCountCart(id,count)
-  //   console.log(res);
-  //   console.log(res?.data.data.products);
-  //   let produucts=res?.data.data.products
-  //   produucts.map((pro)=>{
-  //     let count=pro.count
-  //     return count
-  //   })
-  //   console.log(count)
-  //   ///setCount(count+1)
 
-  // }
   async function removeItem(id) {
     let { data } = await removeItemCart(id);
-    console.log(data?.data.totalCartPrice);
+   // console.log(data?.data.totalCartPrice);
     setNumitemscart(data?.numOfCartItems);
     setTotalprice(data?.data.totalCartPrice);
     setDisplayCartme(data?.data.products);
-   
   }
   async function removeAllItemsCart() {
     let all = await removeAllCart();
-    console.log(all);
+   // console.log(all);
     setDisplayCartme(null);
     setNumitemscart(0);
     setTotalprice(0);
   }
 
-  // async function plusCount(count){
-  //   let x= await updataCountCart(count)
-  //   console.log("x",x)
-  // }
-  // async function negCount(count){
-  //   let y= await updataCountCart(count)
-  //   console.log(y)
-  // }
   return (
     <>
-    <Helmet>
-                <meta charSet="utf-8" />
-                <title>Cart </title>
-        </Helmet>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Cart </title>
+      </Helmet>
       {displayCartme ? (
         <>
           <div className=" text-info container mt-2 text-center d-flex justify-content-around">
@@ -94,7 +79,10 @@ export default function Cart() {
               <>
                 <div className="container ">
                   <div className=" p-0 ">
-                    <div  key={one.product.id} className="row  align-items-center shadoow text-center m-auto ">
+                    <div
+                      key={one.product.id}
+                      className="row  align-items-center shadoow text-center m-auto "
+                    >
                       <div className="col-lg-4 col-md-3 col-sm-12">
                         <img
                           className="w-50 shadoow m-2 rounded-2"
@@ -114,12 +102,26 @@ export default function Cart() {
                           {one.product.ratingsAverage}
                         </span>
                       </div>
-
+                     
                       <div className="col-lg-4 col-md-3 col-sm-12">
                         <div className="text-center">
-                          <button className="btn btn-info m-1">+</button>
+                          <button
+                            onClick={() =>
+                              updataMyCart(one.product.id, one.count + 1)
+                            }
+                            className="btn btn-info m-1"
+                          >
+                            +
+                          </button>
                           {one.count}
-                          <button className="btn btn-info m-1">-</button>
+                          <button
+                            onClick={() =>
+                              updataMyCart(one.product.id, one.count - 1)
+                            }
+                            className="btn btn-info m-1"
+                          >
+                            -
+                          </button>
                         </div>
 
                         <button
@@ -148,6 +150,11 @@ export default function Cart() {
               Remove All
             </button>
           </div>
+          <div className=" container d-flex justify-content-between align-content-center">
+           <button className="btn btn-success text-white m-2 p-2 text-center w-25"><Link to="/address"> Online Payment</Link></button>
+            <button className="btn btn-success text-white m-2 p-2 text-center w-25">Cash On Delivery</button>
+         
+          </div>
         </>
       ) : (
         <div className="text-white bg-success text-center m-auto mt-5 hv-100 rounded-5  container">
@@ -162,5 +169,3 @@ export default function Cart() {
     </>
   );
 }
-
-//onClick={()=>plusCount(one.product.id,one.count)}
